@@ -22,8 +22,8 @@ def createDictionary(querys,docs):
         doc = re.sub(r'[0-9]', '', doc)
         words=doc.split(' ')
         docsWords.append(words)
-        for word in words:
-            if word not in dictionary and word != '':
-                dictionary.append(word)
+        # for word in words:
+        #     if word not in dictionary and word != '':
+        #         dictionary.append(word)
                 
     return dictionary,querysWords,docsWords
