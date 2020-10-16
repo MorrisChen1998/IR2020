@@ -5,26 +5,26 @@ Created on Sat Sep 28 19:37:47 2019
 @author: morri
 """
 
-import pandas as pd
+import numpy as np
 import math
 
 def logNormalization(tf):
     return math.log(tf+1,2)
 
 def getQueryTF(dictionary, querysWords):
-    queryTF = {}
+    queryTF = []
     for queryWords in querysWords:
-        queryTF[queryWords] = []
+        queryTFj = []
         for word in dictionary:
-            queryTF[queryWords].append(logNormalization(querysWords[queryWords].count(word)))
-        
-    return pd.DataFrame(data=queryTF)
+            queryTFj.append(logNormalization(queryWords.count(word)))
+        queryTF.append(queryTFj)    
+    return np.array(queryTF)
 
 def getDocumentTF(dictionary, docsWords):
-    docTF = {}
+    docTF = []
     for docWords in docsWords:
-        docTF[docWords] = []
+        docTFj = []
         for word in dictionary:
-            docTF[docWords].append(logNormalization(docsWords[docWords].count(word)))
-        
-    return pd.DataFrame(data=docTF)
+            docTFj.append(logNormalization(docWords.count(word)))
+        docTF.append(docTFj)    
+    return np.array(docTF)

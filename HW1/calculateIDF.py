@@ -13,5 +13,5 @@ def getIDF(queryTF, docTF, dictionary):
     queryTFinverse=queryTF.transpose()
     IDF = []
     for index in range(len(dictionary)):
-        IDF.append(math.log((len(docTFinverse[index])+len(queryTFinverse[index]))/(np.count_nonzero((queryTFinverse[index]).values)+np.count_nonzero(docTFinverse[index].values))))
-    return IDF
+        IDF.append(math.log(1+(len(docTFinverse[index])+len(queryTFinverse[index]))/(np.count_nonzero(queryTFinverse[index])+np.count_nonzero(docTFinverse[index]))))
+    return np.array(IDF)
