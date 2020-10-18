@@ -46,7 +46,7 @@ print(time.time() - start_time)
 #%% calculate similarity
 start_time = time.time()
 import calculateCos
-print('......calculating similarity between queries and documents......')
+print('......calculating cosine similarity......')
 querysSim = calculateCos.getSimilarity(docTFIDF, queryTFIDF)
 print(time.time() - start_time)
 
