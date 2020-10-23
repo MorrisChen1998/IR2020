@@ -1,1 +1,1 @@
-runVectorSpaceModel.py run下去，結束
+執行runVectorSpaceModel.py即可
