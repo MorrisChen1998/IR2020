@@ -47,15 +47,16 @@ start_time = time.time()
 import calculateBM25
 print('......calculating BM25......')
 k1 = 1.5
-k3 = 5
-b = 1
-delta = 0.8
+k3 = 10
+b = 0.3
+delta = 0.5
+
 querysSim = calculateBM25.getSimilarity(k1, k3, b, delta, documentLengthNormalizations,queryTF, docTF, IDF)
 print(time.time() - start_time)
 
-#%% print out
+#% print out
 start_time = time.time()
 import printOutAnswer
 print('......print out answer......')
-printOutAnswer.printOutAnswer(querysSim)
+printOutAnswer.printOutAnswer(queryList, docList, querysSim)
 print(time.time() - start_time)

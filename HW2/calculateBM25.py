@@ -5,7 +5,6 @@ Created on Mon Oct  7 21:42:43 2019
 @author: morri
 """
 
-import operator
 '''
 k1, k3, b, delta, DLN = constant
 DLN = document length normalization
@@ -21,11 +20,11 @@ def calculateBM25(k1, k3, b, delta, DLN, TFq, TFj, IDF):
   
 
 def getSimilarity(k1, k3, b, delta, DLNs, queryTF, docTF, IDF):
-    sim={}
-    querysSim={}
+    querysSim=[]
     for query in queryTF:
+        sim=[]
         for doc in docTF:
-            sim[doc]=calculateBM25(k1, k3, b, delta, DLNs[doc], queryTF[query].values, docTF[doc].values, IDF)
-        querysSim[query] = sorted(sim.items(), key=operator.itemgetter(1),reverse=True)[:50]
+            sim.append(calculateBM25(k1, k3, b, delta, DLNs[len(sim)], query, doc, IDF))
+        querysSim.append(sorted(range(len(sim)), key=lambda k: sim[k], reverse = True))
 
     return querysSim

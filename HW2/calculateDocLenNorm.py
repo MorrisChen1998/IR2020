@@ -4,13 +4,13 @@ Created on Mon Oct  7 23:55:05 2019
 
 @author: morri
 """
-
+import numpy as np
 def getDocumentLengthNormalization(docsWords):
     average = 0
-    documentLengthNormalization = {}
+    documentLengthNormalization = []
     for doc in docsWords:
-        average+=len(docsWords[doc])/len(docsWords)
-        documentLengthNormalization[doc] = len(docsWords[doc])
-    for doc in docsWords:
-        documentLengthNormalization[doc]/=average
+        average+=len(doc)/len(docsWords)
+        documentLengthNormalization.append(len(doc))
+
+    documentLengthNormalization = np.array(documentLengthNormalization)/average
     return documentLengthNormalization
