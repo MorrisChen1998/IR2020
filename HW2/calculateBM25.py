@@ -11,13 +11,13 @@ DLN = document length normalization
 '''
 import numpy as np
 
-def calculateBM25(k1, k3, b, delta, DLN, TFq, TFj, IDF):
-    TFpron = np.array(TFj)/(1-b+b*DLN)+delta
+def calculateBM25(k1, k3, b, delta, DLN, TFq, TFd, IDF):
+    TFpron = TFd/(1-b+b*DLN)+delta
     F = (k1+1)*TFpron/(k1+TFpron)
-    TF = (k3+1)*np.array(TFq)/(k3+np.array(TFq))
-    SIMbm25 = np.sum(F*TF*np.array(IDF))
+#    F = (k1+1)*TFd/(k1*(1-b+b*DLN)+TFd)+delta
+#    TF = (k3+1)*TFq/(k3+TFq)
+    SIMbm25 = np.sum(F*TFq*IDF*IDF)
     return SIMbm25
-  
 
 def getSimilarity(k1, k3, b, delta, DLNs, queryTF, docTF, IDF):
     querysSim=[]
@@ -26,5 +26,4 @@ def getSimilarity(k1, k3, b, delta, DLNs, queryTF, docTF, IDF):
         for doc in docTF:
             sim.append(calculateBM25(k1, k3, b, delta, DLNs[len(sim)], query, doc, IDF))
         querysSim.append(sorted(range(len(sim)), key=lambda k: sim[k], reverse = True))
-
     return querysSim
