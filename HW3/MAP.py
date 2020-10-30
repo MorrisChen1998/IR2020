@@ -1,21 +1,33 @@
-# -*- coding: utf-8 -*-
+data = ['s1','s2','s3']
+for x in range(3):
+    f = open(data[x]+'.txt')
+    query = int(f.readline())
+    MAP = float(0)
+    for i in range(query):
+        q_r = f.readline().strip('\n').split(' ')
+        q_a = f.readline().strip('\n').split(' ')
+        hit = float(0)
+        for d in range(len(q_r)):
+            if(q_r[d] in q_a):
+                hit+=1
+                MAP+=hit/((d+1)*len(q_a)*query)
+            if(hit>=len(q_a)):
+                break
+    f.close()
+    print("%.4f" % MAP)
 
-'''
-2
-d123 d84 d56 d6 d8 d9 d511 d129 d187 d25 d38 d48 d250 d113 d3
-d3 d123 d25 d56 d9
-d84 d56 d123 d129 d8 d6 d511 d9 d187 d3 d48 d38 d25 d113 d250
-d123 d3 d6
-'''
+#%%
 query = int(input())
-MAP = 0
+MAP = float(0)
 for i in range(query):
     q_r = input().split(' ')
     q_a = input().split(' ')
-    hit = 0
+    hit = float(0)
+    
     for d in range(len(q_r)):
         if(q_r[d] in q_a):
             hit+=1
             MAP+=hit/((d+1)*len(q_a)*query)
-            
+        if(hit>=len(q_a)):
+            break
 print("%.4f" % MAP)
