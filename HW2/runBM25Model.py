@@ -46,12 +46,12 @@ print("%.2f" % (time.time() - start_time))
 start_time = time.time()
 import calculateBM25
 print('......calculating BM25......')
-#k3 is useless parameter for short query
+# k3 is useless parameter for short query
 k3 = 5
 
 k1 = 2.5
 b = .8
-delta = .8
+delta = .75
 
 querysSim = calculateBM25.getSimilarity(k1, k3, b, delta, documentLengthNormalizations,queryTF, docTF, idf)
 print("%.2f" % (time.time() - start_time))
