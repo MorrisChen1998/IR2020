@@ -14,16 +14,16 @@ import numpy as np
 def calculateBM25L(k1, k3, b, delta, DLN, TFq, TFd, IDF):
     TFpron = TFd/(1-b+b*DLN)+delta
     F = (k1+1)*TFpron/(k1+TFpron)
-#    TF = (k3+1)*TFq/(k3+TFq)
-    SIMbm25 = np.sum(F*TFq*IDF*IDF)
-    return SIMbm25
+    TF = (k3+1)*TFq/(k3+TFq)
+    SIMbm25L = np.sum(F*TF*IDF*IDF)
+    return SIMbm25L
 def calculateBM25(k1, k3, b, delta, DLN, TFq, TFd, IDF):
     F = (k1+1)*TFd/(k1*(1-b+b*DLN)+TFd)
-#    TF = (k3+1)*TFq/(k3+TFq)
-    SIMbm25 = np.sum(F*TFq*IDF*IDF)
+    TF = (k3+1)*TFq/(k3+TFq)
+    SIMbm25 = np.sum(F*TF*IDF*IDF)
     return SIMbm25
 def calculateBM1(TFq,IDF):
-    return np.sum(IDF*TFq)
+    return np.dot(IDF,TFq)
 
 def getSimilarity(a1, a2, k1, k3, b, delta, DLNs, queryTF, docTF, IDF):
     querysSim=[]
