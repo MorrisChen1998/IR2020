@@ -16,6 +16,15 @@ def getQueryTF(dictionary, querysWords):
         queryTF.append(queryTFj)
     return np.array(queryTF)
 
+def getQueryID(dictionary, querysWords):
+    queryID = []
+    for queryWords in querysWords:
+        ids = []
+        for word in queryWords:
+            ids.append(dictionary.index(word))
+        queryID.append(ids)
+    return queryID
+
 def getDocumentTF(dictionary, docsWords):
     docTF = []
     for docWords in docsWords:
