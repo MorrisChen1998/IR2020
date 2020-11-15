@@ -36,7 +36,7 @@ documentLength, BG, P_w_d = calculateBGandUnigram.getBGandUnigram(dictionary,doc
 print("%.2f" % (time.time() - start_time))
 
 #%% EM model initialize
-import numpy as np
+import sparse, numpy as np
 print('......EM training......')
 wNumber = len(dictionary)
 dNumber = len(docs)
@@ -46,7 +46,7 @@ P_T_d = np.random.dirichlet(np.ones(topicNum),size= dNumber)
 #P_w_T = np.ones((topicNum, wNumber))/wNumber
 #P_T_d = np.ones((dNumber, topicNum))/topicNum
 P_T_wd = np.zeros(shape=(wNumber, dNumber, topicNum))
-
+P_T_wd = sparse.COO(P_T_wd)
 def Estep():
     global P_T_wd
     for i in range(wNumber):
