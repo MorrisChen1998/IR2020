@@ -27,23 +27,26 @@ start_time = time.time()
 # import calculateBG
 # bg = calculateBG.getBG(dictionary,docTF,docLength)
 # np.save('bg',bg)
+'''
+BG model cost half hour to train
+'''
 print('......loading BG......')
 bg = np.load('bg.npy')
 print("%.2f" % (time.time() - start_time))
 
 #%%
-n_topic = 30
-n_iter = 1
+n_topic = 50
+n_iter = 100
 start_time = time.time()
 print('......training PLSA model......')
 import calculatePLSA as plsa
-P_T_d, P_w_T = plsa.plsa_training(docTF.row, docTF.col, docTF.data, len(dictionary), len(docLength), 30, 1)
-
+P_T_d, P_w_T = plsa.plsa_training(docTF.row, docTF.col, docTF.data, len(dictionary), len(docLength), n_topic, n_iter)
+loglikelihood = plsa.calculateLikelihood(docTF, P_T_d, P_w_T, len(docLength))
 #%% calculate similarity
 start_time = time.time()
 print('......calculating similarity......')
-a = 0.3
-b = 0.5
+a = 0.1
+b = 0.8
 querysSim = plsa.getSimilarity(a, b, queryIDs, docTF, docLength, docUnigram, bg, P_T_d, P_w_T)
 print("%.2f" % (time.time() - start_time))
 
