@@ -39,13 +39,14 @@ n_topic = 50
 n_iter = 100
 start_time = time.time()
 print('......training PLSA model......')
-import calculatePLSA as plsa
-P_T_d, P_w_T = plsa.plsa_training(docTF.row, docTF.col, docTF.data, len(dictionary), len(docLength), n_topic, n_iter)
-loglikelihood = plsa.calculateLikelihood(docTF, P_T_d, P_w_T, len(docLength))
+import calculateEMtraining as em
+P_T_d, P_w_T = em.plsa_training(docTF.row, docTF.col, docTF.data, len(dictionary), len(docLength), n_topic, n_iter)
+loglikelihood = em.calculateLikelihood(docTF, P_T_d, P_w_T, len(docLength))
 #%% calculate similarity
 start_time = time.time()
 print('......calculating similarity......')
-a = 0.1
+import calculatePLSA as plsa
+a = 0
 b = 0.8
 querysSim = plsa.getSimilarity(a, b, queryIDs, docTF, docLength, docUnigram, bg, P_T_d, P_w_T)
 print("%.2f" % (time.time() - start_time))
