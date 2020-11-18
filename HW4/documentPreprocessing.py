@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from tqdm import tqdm
-import numpy as np
-import sparse as sp
 from scipy.sparse import csr_matrix
 
 #%%
@@ -30,6 +28,7 @@ def createDictionary(docs):
     docTF.getcol(x)=x term freq
     '''
     return dictionary, docLength, docTF, docUnigram
+
 #%%
 def getQueryID(dictionary, querys):
     queryID = []

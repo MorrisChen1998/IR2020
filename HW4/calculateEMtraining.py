@@ -4,12 +4,14 @@ import numpy as np
 from numba import jit
 from tqdm import tqdm
 
+#%%
 def calculateLikelihood(docTF, P_T_d, P_w_T, doc_len):
     loglikelihood = 0
     for i in tqdm(range(len(docTF.data))):
         loglikelihood += docTF.data[i]*np.log10(np.dot(P_T_d[docTF.row[i],:],P_w_T[:,docTF.col[i]]))
     return loglikelihood
 
+#%%
 def plsa_training(docTF_row, docTF_col, docTF_val, n_word, n_doc, n_topic, n_iter):
     P_w_T = np.random.dirichlet(np.ones(n_word),size= n_topic)
     P_T_d = np.random.dirichlet(np.ones(n_topic),size= n_doc)
@@ -17,6 +19,7 @@ def plsa_training(docTF_row, docTF_col, docTF_val, n_word, n_doc, n_topic, n_ite
         P_T_d, P_w_T = em_step(docTF_row, docTF_col, docTF_val, P_T_d, P_w_T, n_word, n_doc, n_topic)
     return P_T_d, P_w_T
 
+#%%
 @jit(nopython=True)#with numba to accelerate
 def em_step(docTF_row, docTF_col, docTF_val, P_T_d, P_w_T, n_word, n_doc, n_topic):
     nnz = len(docTF_val)
