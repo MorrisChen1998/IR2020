@@ -33,7 +33,7 @@ def getSimilarity(a, b, queryIDs, docUnigram, bg, P_T_d, P_w_T):
         
         sim = []
         for j in range(len(P_T_d)):
-            P_wi_dj = [docUnigram[j,i] for i in range(len(query))]
+            P_wi_dj = [docUnigram[j,query[i]] for i in range(len(query))]
             P_T_dj = P_T_d[j,:]
             sim.append(calculateP_q_d(a, b, len(query), P_wi_dj, bg_i, P_T_dj, P_wi_T))
         
