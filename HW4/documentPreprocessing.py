@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from tqdm import tqdm
 from scipy.sparse import csr_matrix
+from nltk.corpus import stopwords 
+stop_words = set(stopwords.words('english')) 
 
 #%%
 def createDictionary(docs):
@@ -12,7 +14,7 @@ def createDictionary(docs):
     dictionary = {}
     
     for j in tqdm(range(len(docs))):
-        words=docs[j].split()
+        words=[w for w in docs[j].split() if not (w in stop_words)]
         docLength.append(len(words))
         for word in words:
             index = dictionary.setdefault(word, len(dictionary))

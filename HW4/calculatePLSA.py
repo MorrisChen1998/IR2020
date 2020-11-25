@@ -9,7 +9,6 @@ def calculatelogP_q_d(a, b, query_len, P_wi_dj, bg_i, P_T_dj, P_wi_T):
         unigram_model = np.log(a)+np.log(P_wi_dj[i])
         topic_model = np.log(b)+np.log(np.dot(P_T_dj,P_wi_T[i]))
         bg_model = np.log(1-a-b)+np.log(bg_i[i])
-        # P_q_d += np.logaddexp(topic_model,bg_model)
         P_q_d += np.logaddexp(np.logaddexp(unigram_model,topic_model),bg_model)
     return P_q_d
 

@@ -12,16 +12,18 @@ def calculateLikelihood(docTF, P_T_d, P_w_T, doc_len):
     return loglikelihood
 
 #%%
-def plsa_training(docTF_row, docTF_col, docTF_val, idf, n_word, n_doc, n_topic, n_iter):
+def plsa_training(docTF_row, docTF_col, docTF_val, n_word, n_doc, n_topic, n_iter):
     P_w_T = np.random.dirichlet(np.ones(n_word),size= n_topic)
     P_T_d = np.random.dirichlet(np.ones(n_topic),size= n_doc)
+    # P_w_T = np.ones((n_topic, n_word))/n_word
+    # P_T_d = np.ones((n_doc, n_topic))/n_topic
     for epoch in tqdm(range(n_iter)):
-        P_T_d, P_w_T = em_step(docTF_row, docTF_col, docTF_val, idf, P_T_d, P_w_T, n_word, n_doc, n_topic)
+        P_T_d, P_w_T = em_step(docTF_row, docTF_col, docTF_val, P_T_d, P_w_T, n_word, n_doc, n_topic)
     return P_T_d, P_w_T
 
 #%%
 @jit(nopython=True)#with numba to accelerate
-def em_step(docTF_row, docTF_col, docTF_val, idf, P_T_d, P_w_T, n_word, n_doc, n_topic):
+def em_step(docTF_row, docTF_col, docTF_val, P_T_d, P_w_T, n_word, n_doc, n_topic):
     nnz = len(docTF_val)
 
     sparseP_T_w_d = np.zeros((nnz, n_topic))
@@ -43,7 +45,7 @@ def em_step(docTF_row, docTF_col, docTF_val, idf, P_T_d, P_w_T, n_word, n_doc, n
     d_sum = np.zeros((n_doc))
     for i in range(nnz):
         for k in range(n_topic):
-            q = docTF_val[i] * idf[docTF_col[i]] * sparseP_T_w_d[i, k]
+            q = docTF_val[i] * sparseP_T_w_d[i, k]
             P_w_T[k, docTF_col[i]] += q
             w_sum[k] += q
             P_T_d[docTF_row[i], k] += q

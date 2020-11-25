@@ -10,9 +10,10 @@ import numpy as np
 #%%
 def getBG(dictionary,docTF,docLength):
     BG=[]
+    docTFinverse=docTF.toarray().transpose()
     corpus_length = np.sum(docLength)
     for i in tqdm(range(len(dictionary))):
-        BG.append(np.sum(docTF.getcol(i)) / corpus_length)
+        BG.append(np.sum(docTFinverse[i]) / corpus_length)
     
     return np.array(BG)
 
